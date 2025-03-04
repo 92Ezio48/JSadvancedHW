@@ -79,6 +79,14 @@ var minutes = String(today.getMinutes()).padStart(2, '0');
     
     ButtonEl.addEventListener('click', () => {
       const oldHtml = list.innerHTML;
+        if (NameEl.value === ""){
+          alert("Имя пользователя не введено!") 
+          return;
+        }
+        if (CommentEl.value === ""){
+          alert("Комментарий не введен!") 
+          return;
+        }
         list.innerHTML = oldHtml + `<li class="comment">
           <div class="comment-header">
             <div>${NameEl.value}</div>
