@@ -9,40 +9,7 @@
   <body>
     <div class="container">
       <ul class="comments">
-        <li class="comment">
-          <div class="comment-header">
-            <div>Глеб Фокин</div>
-            <div>12.02.22 12:18</div>
-          </div>
-          <div class="comment-body">
-            <div class="comment-text">
-              Это будет первый комментарий на этой странице
-            </div>
-          </div>
-          <div class="comment-footer">
-            <div class="likes">
-              <span class="likes-counter">3</span>
-              <button class="like-button"></button>
-            </div>
-          </div>
-        </li>
-        <li class="comment">
-          <div class="comment-header">
-            <div>Варвара Н.</div>
-            <div>13.02.22 19:22</div>
-          </div>
-          <div class="comment-body">
-            <div class="comment-text">
-              Мне нравится как оформлена эта страница! ❤
-            </div>
-          </div>
-          <div class="comment-footer">
-            <div class="likes">
-              <span class="likes-counter">75</span>
-              <button class="like-button -active-like"></button>
-            </div>
-          </div>
-        </li>
+       
       </ul>
       <div class="add-form">
         <input
@@ -78,7 +45,6 @@ var minutes = String(today.getMinutes()).padStart(2, '0');
     var currentDate = `${day}.${month}.${year} ${hours}:${minutes}`;
     
     ButtonEl.addEventListener('click', () => {
-      const oldHtml = list.innerHTML;
         if (NameEl.value === ""){
           alert("Имя пользователя не введено!") 
           return;
@@ -87,24 +53,82 @@ var minutes = String(today.getMinutes()).padStart(2, '0');
           alert("Комментарий не введен!") 
           return;
         }
-        list.innerHTML = oldHtml + `<li class="comment">
+       
+        Comments.push({name: NameEl.value, 
+                      time: currentDate, 
+                      text: CommentEl.value, 
+                      likesCounter: 0, 
+                      likeActive: false})
+
+        renderComments();
+    })
+
+    const Comments = [
+      {name: "Глеб Фокин", 
+      time: "12.02.22 12:18", 
+      text: "Это будет первый комментарий на этой странице", 
+      likesCounter: 3, 
+      likeActive: false},
+      {name: "Варвара Н.", 
+      time: "13.02.22 19:22", 
+      text: "Мне нравится как оформлена эта страница! ❤", 
+      likesCounter: 75, 
+      likeActive: true},
+    ]
+
+    const renderComments = () => {
+      
+      const CommentsHtml = Comments.map((Comments, like) =>{
+        return `<li class="comment">
           <div class="comment-header">
-            <div>${NameEl.value}</div>
-            <div>${currentDate}</div>
+            <div>${Comments.name}</div>
+            <div>${Comments.time}</div>
           </div>
           <div class="comment-body">
             <div class="comment-text">
-              ${CommentEl.value}
+              ${Comments.text}
             </div>
           </div>
           <div class="comment-footer">
             <div class="likes">
-              <span class="likes-counter">0</span>
-              <button class="like-button -active-like"></button>
+              <span class="likes-counter">${Comments.likesCounter}</span>
+              <button data-like="${like}" class="like-button"></button>
             </div>
           </div>
-        </li>`
-    })
-    console.log("It works!");
+        </li>`;
+        
+        
+      }).join("");
+      
+      list.innerHTML = CommentsHtml;
+      
+      const CommentLikes = document.querySelectorAll('.like-button', '.-active-like');
+    for (const CommentLike of CommentLikes) {
+      CommentLike.addEventListener("click", () => {
+        console.log("click");
+        CommentLike.classList.toggle("-active-like");
+       
+     const index = Array.from(CommentLikes).indexOf(CommentLike);
+     Comments[index].likeActive = !Comments[index].likeActive;
+     Comments[index].likesCounter += Comments[index].likeActive ? 1 : -1;
+     renderComments();
+   
+      })
+      CommentLikes.forEach((CommentLike, index) => {
+        if (Comments[index].likeActive === true) {
+        CommentLike.classList.add("-active-like");
+      } else {
+        CommentLike.classList.remove("-active-like");
+      }
+      })
+    }
+    
+     
+    }
+    
+    renderComments();
+    
+
+    
   </script>
 </html>
