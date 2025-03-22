@@ -96,24 +96,20 @@ let minutes = String(today.getMinutes()).padStart(2, '0');
             </div>
           </div>
         </li>`;
-        const buttonClass = comments.likeActive ? 'like-button active-like' : 'like-button';
         
+       
       }).join("");
-      
       list.innerHTML = commentsHtml;
-      
       const commentLikes = document.querySelectorAll('.like-button', '.-active-like');
     for (const commentLike of commentLikes) {
       commentLike.addEventListener("click", () => {
         console.log("click");
-        
+    
        
      const index = Array.from(commentLikes).indexOf(commentLike);
      comments[index].likeActive = !comments[index].likeActive;
      comments[index].likesCounter += comments[index].likeActive ? 1 : -1;
      renderComments();
-     
-   
       })
       commentLikes.forEach((commentLike, index) => {
         if (comments[index].likeActive === true) {
@@ -123,8 +119,7 @@ let minutes = String(today.getMinutes()).padStart(2, '0');
       }
       })
     }
-    
-     
+      
     }
     
     renderComments();
