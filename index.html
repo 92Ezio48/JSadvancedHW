@@ -75,24 +75,25 @@ let minutes = String(today.getMinutes()).padStart(2, '0');
       likesCounter: 75, 
       likeActive: true},
     ]
-
+    
     const renderComments = () => {
       
-      const commentsHtml = comments.map((comments, like) =>{
+      const commentsHtml = comments.map((comment, like) =>{
+        const buttonClass = comment.likeActive ? 'like-button -active-like' : 'like-button';
         return `<li class="comment">
           <div class="comment-header">
-            <div>${comments.name}</div>
-            <div>${comments.time}</div>
+            <div>${comment.name}</div>
+            <div>${comment.time}</div>
           </div>
           <div class="comment-body">
             <div class="comment-text">
-              ${comments.text}
+              ${comment.text}
             </div>
           </div>
           <div class="comment-footer">
             <div class="likes">
-              <span class="likes-counter">${comments.likesCounter}</span>
-              <button data-like="${like}" class="like-button"></button>
+              <span class="likes-counter">${comment.likesCounter}</span>
+              <button data-like="${like}" class="${buttonClass}"></button>
             </div>
           </div>
         </li>`;
@@ -100,7 +101,7 @@ let minutes = String(today.getMinutes()).padStart(2, '0');
        
       }).join("");
       list.innerHTML = commentsHtml;
-      const commentLikes = document.querySelectorAll('.like-button', '.-active-like');
+      const commentLikes = document.querySelectorAll('.like-button');
     for (const commentLike of commentLikes) {
       commentLike.addEventListener("click", () => {
         console.log("click");
@@ -110,13 +111,6 @@ let minutes = String(today.getMinutes()).padStart(2, '0');
      comments[index].likeActive = !comments[index].likeActive;
      comments[index].likesCounter += comments[index].likeActive ? 1 : -1;
      renderComments();
-      })
-      commentLikes.forEach((commentLike, index) => {
-        if (comments[index].likeActive === true) {
-        commentLike.classList.add("-active-like");
-      } else {
-        commentLike.classList.remove("-active-like");
-      }
       })
     }
       
