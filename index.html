@@ -54,12 +54,13 @@ let minutes = String(today.getMinutes()).padStart(2, '0');
           return;
         }
        
-        comments.push({name: nameEl.value, 
+        comments.push({name: nameEl.value.replaceAll("<", " ").replaceAll(">", " "), 
                       time: currentDate, 
-                      text: commentEl.value, 
+                      text: commentEl.value.replaceAll("<", " ").replaceAll(">", " "), 
                       likesCounter: 0, 
                       likeActive: false})
-
+                      nameEl.value = '';
+                      commentEl.value = '';
         renderComments();
     })
 
@@ -80,13 +81,13 @@ let minutes = String(today.getMinutes()).padStart(2, '0');
       
       const commentsHtml = comments.map((comment, like) =>{
         const buttonClass = comment.likeActive ? 'like-button -active-like' : 'like-button';
-        return `<li class="comment">
+        return `<li data-index="${like}" class="comment">
           <div class="comment-header">
-            <div>${comment.name}</div>
+            <div data-name="${comment.name}">${comment.name}</div>
             <div>${comment.time}</div>
           </div>
           <div class="comment-body">
-            <div class="comment-text">
+            <div data-text="${comment.text}" class="comment-text">
               ${comment.text}
             </div>
           </div>
@@ -101,24 +102,33 @@ let minutes = String(today.getMinutes()).padStart(2, '0');
        
       }).join("");
       list.innerHTML = commentsHtml;
-      const commentLikes = document.querySelectorAll('.like-button');
-    for (const commentLike of commentLikes) {
-      commentLike.addEventListener("click", () => {
-        console.log("click");
-    
-       
-     const index = Array.from(commentLikes).indexOf(commentLike);
-     comments[index].likeActive = !comments[index].likeActive;
-     comments[index].likesCounter += comments[index].likeActive ? 1 : -1;
-     renderComments();
-      })
-    }
-      
-    }
-    
-    renderComments();
-    
+                  const commentLikes = document.querySelectorAll('.like-button');
+                  for (const commentLike of commentLikes) {
+                    commentLike.addEventListener("click", (event) => {
+                      event.stopPropagation();
+                      console.log("click");
+                  
+                    
+                  const index = Array.from(commentLikes).indexOf(commentLike);
+                  comments[index].likeActive = !comments[index].likeActive;
+                  comments[index].likesCounter += comments[index].likeActive ? 1 : -1;
 
-    
+                  renderComments();        
+                    })
+                  }
+  const commentFormsEl = document.querySelectorAll('.comment');
+  for (const commentFormEl of commentFormsEl) {
+  commentFormEl.addEventListener('click', () => {
+  console.log("click");
+  const index = event.currentTarget.getAttribute('data-index');
+  const comment = comments[index];
+  document.querySelector('.add-form-text').value = comment.name + ` : ${comment.text}  ` ;
+  
+                                              }) 
+                                            }
+}
+   
+    renderComments();
+ 
   </script>
 </html>
