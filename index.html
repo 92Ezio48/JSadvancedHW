@@ -54,9 +54,9 @@ let minutes = String(today.getMinutes()).padStart(2, '0');
           return;
         }
        
-        comments.push({name: nameEl.value.replaceAll("<", " ").replaceAll(">", " "), 
+        comments.push({name: nameEl.value.replaceAll("<", "&lt").replaceAll(">", "&gt"), 
                       time: currentDate, 
-                      text: commentEl.value.replaceAll("<", " ").replaceAll(">", " "), 
+                      text: commentEl.value.replaceAll("<", "&lt").replaceAll(">", "&gt"), 
                       likesCounter: 0, 
                       likeActive: false})
                       nameEl.value = '';
@@ -130,5 +130,6 @@ let minutes = String(today.getMinutes()).padStart(2, '0');
    
     renderComments();
  
+    
   </script>
 </html>
