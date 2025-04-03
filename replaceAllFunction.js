@@ -1,3 +1,3 @@
 export const replaceAllFunction = (str) => {
-    return str.replaceAll("<", "&lt").replaceAll(">", "&gt");
-  };
+  return str.replaceAll("<", "&lt").replaceAll(">", "&gt");
+};

@@ -1,11 +1,12 @@
-export const commentFormsEl = document.querySelectorAll('.comment');
+import { comments } from "./commentsData.js";
 export const answerFormClick = () => {
-    for (const commentFormEl of commentFormsEl) {
-        commentFormEl.addEventListener('click', () => {
-        const index = event.currentTarget.getAttribute('data-index');
-        const comment = comments[index];
-        document.querySelector('.add-form-text').value = comment.name + ` : ${comment.text}  ` ;
-        
-                                                  }) 
-                                                }
-                                            }
+  const commentFormsEl = document.querySelectorAll(".comment");
+  for (const commentFormEl of commentFormsEl) {
+    commentFormEl.addEventListener("click", () => {
+      const index = event.currentTarget.getAttribute("data-index");
+      const comment = comments[index];
+      document.querySelector(".add-form-text").value =
+        comment.name + ` : ${comment.text}  `;
+    });
+  }
+};
