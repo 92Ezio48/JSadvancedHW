@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title>Проект "Комменты"</title>
@@ -8,9 +8,7 @@
 
   <body>
     <div class="container">
-      <ul class="comments">
-       
-      </ul>
+      <ul class="comments"></ul>
       <div class="add-form">
         <input
           type="text"
@@ -30,106 +28,9 @@
     </div>
   </body>
 
-  <script>
-    "use strict";
-    const nameEl = document.querySelector('.add-form-name');
-    const commentEl = document.querySelector('.add-form-text');
-    const buttonEl = document.querySelector('.add-form-button');
-    const list = document.querySelector('.comments');
-    let today = new Date();
-    let day = String(today.getDate()).padStart(2, '0');
-    let month = String(today.getMonth() + 1).padStart(2, '0');
-    let year = today.getFullYear().toString().substr(2,2);
-    let hours = String(today.getHours()).padStart(2, '0');
-let minutes = String(today.getMinutes()).padStart(2, '0');
-    let currentDate = `${day}.${month}.${year} ${hours}:${minutes}`;
-    
-    buttonEl.addEventListener('click', () => {
-        if (nameEl.value === ""){
-          alert("Имя пользователя не введено!") 
-          return;
-        }
-        if (commentEl.value === ""){
-          alert("Комментарий не введен!") 
-          return;
-        }
-       
-        comments.push({name: nameEl.value.replaceAll("<", "&lt").replaceAll(">", "&gt"), 
-                      time: currentDate, 
-                      text: commentEl.value.replaceAll("<", "&lt").replaceAll(">", "&gt"), 
-                      likesCounter: 0, 
-                      likeActive: false})
-                      nameEl.value = '';
-                      commentEl.value = '';
-        renderComments();
-    })
-
-    const comments = [
-      {name: "Глеб Фокин", 
-      time: "12.02.22 12:18", 
-      text: "Это будет первый комментарий на этой странице", 
-      likesCounter: 3, 
-      likeActive: false},
-      {name: "Варвара Н.", 
-      time: "13.02.22 19:22", 
-      text: "Мне нравится как оформлена эта страница! ❤", 
-      likesCounter: 75, 
-      likeActive: true},
-    ]
-    
-    const renderComments = () => {
-      
-      const commentsHtml = comments.map((comment, like) =>{
-        const buttonClass = comment.likeActive ? 'like-button -active-like' : 'like-button';
-        return `<li data-index="${like}" class="comment">
-          <div class="comment-header">
-            <div data-name="${comment.name}">${comment.name}</div>
-            <div>${comment.time}</div>
-          </div>
-          <div class="comment-body">
-            <div data-text="${comment.text}" class="comment-text">
-              ${comment.text}
-            </div>
-          </div>
-          <div class="comment-footer">
-            <div class="likes">
-              <span class="likes-counter">${comment.likesCounter}</span>
-              <button data-like="${like}" class="${buttonClass}"></button>
-            </div>
-          </div>
-        </li>`;
-        
-       
-      }).join("");
-      list.innerHTML = commentsHtml;
-                  const commentLikes = document.querySelectorAll('.like-button');
-                  for (const commentLike of commentLikes) {
-                    commentLike.addEventListener("click", (event) => {
-                      event.stopPropagation();
-                      console.log("click");
-                  
-                    
-                  const index = Array.from(commentLikes).indexOf(commentLike);
-                  comments[index].likeActive = !comments[index].likeActive;
-                  comments[index].likesCounter += comments[index].likeActive ? 1 : -1;
-
-                  renderComments();        
-                    })
-                  }
-  const commentFormsEl = document.querySelectorAll('.comment');
-  for (const commentFormEl of commentFormsEl) {
-  commentFormEl.addEventListener('click', () => {
-  console.log("click");
-  const index = event.currentTarget.getAttribute('data-index');
-  const comment = comments[index];
-  document.querySelector('.add-form-text').value = comment.name + ` : ${comment.text}  ` ;
-  
-                                              }) 
-                                            }
-}
-   
-    renderComments();
- 
-    
-  </script>
+  <script type="module" src="./index.js"></script>
+  <script type="module" src="./renderCommentsFunction.js"></script>
+  <script type="module" src="./likeBtn.js"></script>
+  <script type="module" src="./answerFormClick.js"></script>
+  <script type="module" src="./createCommentBtn.js"></script>
 </html>
