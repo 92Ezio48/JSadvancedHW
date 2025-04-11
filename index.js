@@ -1,5 +1,16 @@
-"use strict";
-import { renderComments } from "./renderCommentsFunction.js";
+'use strict'
+import { renderComments } from './renderCommentsFunction.js'
+import { updateCommentsData } from './commentsData.js'
 
+fetch('https://wedev-api.sky.pro/api/v1/V-Korolyov/comments', {
+    method: 'GET',
+})
+    .then((response) => {
+        return response.json()
+    })
+    .then((data) => {
+        console.log(data)
+        updateCommentsData(data.comments)
+        renderComments()
+    })
 
-renderComments();
