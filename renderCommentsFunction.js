@@ -24,7 +24,7 @@ export const renderComments = () => {
             return `<li data-index="${like}" class="comment">
         <div class="comment-header">
           <div data-name="${comment.author.name}">${comment.author.name}</div>
-          <div>${comment.time}</div>
+          <div>${comment.date}</div>
         </div>
         <div class="comment-body">
           <div data-text="${comment.text}" class="comment-text">
@@ -33,7 +33,7 @@ export const renderComments = () => {
         </div>
         <div class="comment-footer">
           <div class="likes">
-            <span class="likes-counter">${comment.likesCounter}</span>
+            <span class="likes-counter">${comment.likes}</span>
             <button data-like="${like}" class="${buttonClass}"></button>
           </div>
         </div>

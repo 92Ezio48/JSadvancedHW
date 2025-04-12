@@ -7,8 +7,8 @@ export const btnlikeClick = () => {
       event.stopPropagation();
 
       const index = Array.from(commentLikes).indexOf(commentLike);
-      comments[index].likeActive = !comments[index].likeActive;
-      comments[index].likesCounter += comments[index].likeActive ? 1 : -1;
+      comments[index].isLiked = !comments[index].isLiked;
+      comments[index].likes += comments[index].isLiked ? 1 : -1;
 
       renderComments();
     });

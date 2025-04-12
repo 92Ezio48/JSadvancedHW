@@ -5,6 +5,16 @@ import { comments } from './commentsData.js'
 import { replaceAllFunction } from './replaceAllFunction.js'
 import { currentDate } from './renderCommentsFunction.js'
 import { renderComments } from './renderCommentsFunction.js'
+import { updateCommentsData } from './commentsData.js'
+export const newComment = {
+    author: {
+        name: replaceAllFunction(nameEl.value),
+    },
+    date: currentDate,
+    text: replaceAllFunction(commentEl.value),
+    likes: 0,
+    isLiked: false,
+}
 buttonEl.addEventListener('click', () => {
     if (nameEl.value === '') {
         alert('Имя пользователя не введено!')
@@ -15,13 +25,20 @@ buttonEl.addEventListener('click', () => {
         return
     }
 
-    comments.push({
-        name: replaceAllFunction(nameEl.value),
-        time: currentDate,
-        text: replaceAllFunction(commentEl.value),
-        likesCounter: 0,
-        likeActive: false,
+    fetch('https://wedev-api.sky.pro/api/v1/V-Korolyov/comments', {
+        method: 'POST',
+        body: JSON.stringify(newComment),
+        headers: {
+            'Content-Type': 'application/json',
+        },
     })
+        .then((response) => {
+            return response.json()
+        })
+        .then((data) => {
+            updateCommentsData(data.comments)
+            renderComments()
+        })
     nameEl.value = ''
     commentEl.value = ''
     renderComments()

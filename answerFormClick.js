@@ -5,9 +5,9 @@ export const answerFormClick = () => {
     for (const commentFormEl of commentFormsEl) {
         commentFormEl.addEventListener('click', () => {
             const index = event.currentTarget.getAttribute('data-index')
-            const comment = updateCommentsData[index]
+            const comment = comments[index]
             document.querySelector('.add-form-text').value =
-                comment.name + ` : ${comment.text}  `
+                comment.author.name + ` : ${comment.text}  `
         })
     }
 }
