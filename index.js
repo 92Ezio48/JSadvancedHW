@@ -9,8 +9,6 @@ fetch('https://wedev-api.sky.pro/api/v1/V-Korolyov/comments', {
         return response.json()
     })
     .then((data) => {
-        console.log(data)
         updateCommentsData(data.comments)
         renderComments()
     })
-

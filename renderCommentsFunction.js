@@ -15,7 +15,6 @@ import { btnlikeClick } from './likeBtn.js'
 import { answerFormClick } from './answerFormClick.js'
 
 export const renderComments = () => {
-    console.log(comments)
     if (Array.isArray(comments)) {
         const commentsHtml = comments
 

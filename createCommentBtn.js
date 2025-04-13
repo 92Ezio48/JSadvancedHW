@@ -35,7 +35,7 @@ buttonEl.addEventListener('click', () => {
             return response.json()
         })
         .then((data) => {
-            updateCommentsData(data.comments)
+            comments.push(newComment)
             renderComments()
         })
     nameEl.value = ''
