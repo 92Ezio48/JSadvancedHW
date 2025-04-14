@@ -2,13 +2,16 @@
 import { renderComments } from './renderCommentsFunction.js'
 import { updateCommentsData } from './commentsData.js'
 
-fetch('https://wedev-api.sky.pro/api/v1/V-Korolyov/comments', {
-    method: 'GET',
-})
-    .then((response) => {
-        return response.json()
+export const getData = () => {
+    fetch('https://wedev-api.sky.pro/api/v1/V-Korolyov/comments', {
+        method: 'GET',
     })
-    .then((data) => {
-        updateCommentsData(data.comments)
-        renderComments()
-    })
+        .then((response) => {
+            return response.json()
+        })
+        .then((data) => {
+            updateCommentsData(data.comments)
+            renderComments()
+        })
+}
+getData()

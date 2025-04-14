@@ -19,13 +19,15 @@ export const renderComments = () => {
         const commentsHtml = comments
 
             .map((comment, like) => {
+                const date = new Date(comment.date)
+                const formattedDate = `${String(today.getHours()).padStart(2, '0')}:${String(today.getMinutes()).padStart(2, '0')} ${String(today.getDate()).padStart(2, '0')}.${String(today.getMonth() + 1).padStart(2, '0')}.${today.getFullYear().toString().substr(0, 4)}`
                 const buttonClass = comment.isLiked
                     ? 'like-button -active-like'
                     : 'like-button'
                 return `<li data-index="${like}" class="comment">
         <div class="comment-header">
           <div data-name="${comment.author.name}">${comment.author.name}</div>
-          <div>${comment.date}</div>
+          <div>${formattedDate}</div>
         </div>
         <div class="comment-body">
           <div data-text="${comment.text}" class="comment-text">
