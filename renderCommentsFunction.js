@@ -13,14 +13,13 @@ export const commentFormsEl = document.querySelectorAll('.comment')
 import { comments } from './commentsData.js'
 import { btnlikeClick } from './likeBtn.js'
 import { answerFormClick } from './answerFormClick.js'
-
 export const renderComments = () => {
     if (Array.isArray(comments)) {
         const commentsHtml = comments
 
             .map((comment, like) => {
                 const date = new Date(comment.date)
-                const formattedDate = `${String(today.getHours()).padStart(2, '0')}:${String(today.getMinutes()).padStart(2, '0')} ${String(today.getDate()).padStart(2, '0')}.${String(today.getMonth() + 1).padStart(2, '0')}.${today.getFullYear().toString().substr(0, 4)}`
+                const formattedDate = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')} ${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear().toString().substr(0, 4)}`
                 const buttonClass = comment.isLiked
                     ? 'like-button -active-like'
                     : 'like-button'

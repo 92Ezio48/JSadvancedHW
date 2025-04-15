@@ -3,9 +3,8 @@ import { commentEl } from './renderCommentsFunction.js'
 import { buttonEl } from './renderCommentsFunction.js'
 import { comments } from './commentsData.js'
 import { replaceAllFunction } from './replaceAllFunction.js'
-import { currentDate } from './renderCommentsFunction.js'
 import { renderComments } from './renderCommentsFunction.js'
-import { updateCommentsData } from './commentsData.js'
+import { getData } from './index.js'
 buttonEl.addEventListener('click', () => {
     if (nameEl.value.trim() === '') {
         alert('Имя пользователя не введено!')
@@ -19,7 +18,7 @@ buttonEl.addEventListener('click', () => {
         author: {
             name: replaceAllFunction(nameEl.value),
         },
-        date: currentDate,
+        date: new Date().toISOString(),
         text: replaceAllFunction(commentEl.value),
         likes: 0,
         isLiked: false,
@@ -38,6 +37,7 @@ buttonEl.addEventListener('click', () => {
             .then((data) => {
                 comments.push(newComment)
                 renderComments()
+                getData()
             })
     }
     sendData()
