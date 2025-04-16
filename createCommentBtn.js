@@ -35,8 +35,6 @@ buttonEl.addEventListener('click', () => {
                 return response.json()
             })
             .then((data) => {
-                comments.push(newComment)
-                renderComments()
                 getData()
             })
     }
