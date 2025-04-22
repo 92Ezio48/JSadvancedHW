@@ -8,14 +8,6 @@ import { renderComments } from './renderCommentsFunction.js'
 import { getData } from './index.js'
 import { getDataFirst } from './index.js'
 buttonEl.addEventListener('click', () => {
-    if (nameEl.value.trim() === '') {
-        alert('Имя пользователя не введено!')
-        return
-    }
-    if (commentEl.value.trim() === '') {
-        alert('Комментарий не введен!')
-        return
-    }
     const newComment = {
         author: {
             name: replaceAllFunction(nameEl.value),
@@ -25,7 +17,6 @@ buttonEl.addEventListener('click', () => {
         likes: 0,
         isLiked: false,
     }
-
     const sendData = () => {
         createFormEl.classList.add('hidden')
         loadernewCommentEl.classList.remove('hidden')
@@ -34,20 +25,38 @@ buttonEl.addEventListener('click', () => {
             body: JSON.stringify({
                 text: newComment.text,
                 name: newComment.author.name,
+                forceError: true,
             }),
         })
             .then((response) => {
-                return response.json()
+                if (response.status === 201) {
+                    return response.json()
+                } else {
+                    if (response.status === 500) {
+                        throw new Error('Сервер упал')
+                    }
+                    if (response.status === 400) {
+                        throw new Error(
+                            'Имя и комментарий должны быть не короче 3-х символов',
+                        )
+                    }
+                    throw new Error('Что-то пошло не так')
+                }
             })
             .then((data) => {
                 getData()
+                createFormEl.classList.remove('hidden')
+                loadernewCommentEl.classList.add('hidden')
+                nameEl.value = ''
+                commentEl.value = ''
+            })
+            .catch((Error) => {
+                alert(Error)
                 createFormEl.classList.remove('hidden')
                 loadernewCommentEl.classList.add('hidden')
             })
     }
     sendData()
 
-    nameEl.value = ''
-    commentEl.value = ''
     renderComments()
 })
