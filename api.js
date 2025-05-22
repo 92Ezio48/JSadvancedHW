@@ -8,8 +8,8 @@ import { authToken } from './createCommentBtn.js'
 export let token = ''
 export let updatetoken = (newToken) => {
     token = newToken
+    console.log(token)
 }
-
 export function getComments() {
     return fetch(host, {
         method: 'GET',
@@ -33,6 +33,7 @@ export function deleteComments({ id }) {
 }
 
 export function postComments({ token, text }) {
+    console.log(token)
     const data = JSON.stringify({
         text: commentEl.value,
         token: `Bearer ${token}`,

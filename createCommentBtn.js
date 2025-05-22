@@ -6,7 +6,7 @@ import { loadernewCommentEl } from './renderCommentsFunction.js'
 import { replaceAllFunction } from './replaceAllFunction.js'
 import { renderComments } from './renderCommentsFunction.js'
 import { getData } from './index.js'
-import { postComments } from './api.js'
+import { postComments, token } from './api.js'
 import { getDataFirst } from './index.js'
 export const authToken = 'https://wedev-api.sky.pro/api/user/login'
 export const regToken = 'https://wedev-api.sky.pro/api/user'
@@ -23,7 +23,7 @@ buttonEl.addEventListener('click', () => {
     const sendData = () => {
         createFormEl.classList.add('hidden')
         loadernewCommentEl.classList.remove('hidden')
-        postComments(newComment)
+        postComments(newComment, token)
             .then((response) => {
                 if (response.status === 201) {
                     return response.json()
