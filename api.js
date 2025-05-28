@@ -32,23 +32,27 @@ export function deleteComments({ id }) {
     })
 }
 
-export function postComments({ token, text }) {
+export function postComments({ text }) {
     console.log(token)
     const data = JSON.stringify({
         text: commentEl.value,
-        token: `Bearer ${token}`,
     })
     console.log('Отправляемый токен:', token)
     console.log('Отправляемые данные:', data)
     return fetch(`https://wedev-api.sky.pro/api/v2/V-Korolyov/comments`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
         },
         body: data,
     }).then((response) => {
-        return response.json()
+        if (response.status === 201) {
+            return response.json()
+        } else {
+            if (response.status === 401) {
+                throw new Error('Необходима авторизация!')
+            }
+        }
     })
 }
 
@@ -63,7 +67,11 @@ export function login({ login, password }) {
         .then((response) => {
             console.log('Fetch вернул промис, и это первый then')
             if (response.status === 201) {
-                return response.json()
+                return response.json().then((data) => {
+                    const token = data.user.token
+                    localStorage.setItem('authToken', token)
+                    return data
+                })
             } else {
                 if (response.status === 500) {
                     throw new Error('Сервер упал')
@@ -71,7 +79,6 @@ export function login({ login, password }) {
                 if (response.status === 400) {
                     throw new Error('Неправильный запрос')
                 }
-                throw new Error('Что-то пошло не так')
             }
         })
         .catch((Error) => {

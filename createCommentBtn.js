@@ -23,7 +23,7 @@ buttonEl.addEventListener('click', () => {
     const sendData = () => {
         createFormEl.classList.add('hidden')
         loadernewCommentEl.classList.remove('hidden')
-        postComments(newComment, token)
+        postComments(newComment)
             .then((response) => {
                 if (response.status === 201) {
                     return response.json()
@@ -36,8 +36,13 @@ buttonEl.addEventListener('click', () => {
                             'Имя и комментарий должны быть не короче 3-х символов',
                         )
                     }
-                    throw new Error('Что-то пошло не так')
+                    if (response.status === 401) {
+                        throw new Error('Необходима авторизация!')
+                    }
                 }
+            })
+            .catch((Error) => {
+                alert(Error)
             })
             .then((data) => {
                 getData()
