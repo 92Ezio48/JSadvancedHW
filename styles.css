@@ -145,3 +145,9 @@ body {
 .hidden {
     display: none;
 }
+.add-form-name_login {
+    margin-bottom: 15px;
+}
+.container_login {
+    padding-top: 0px;
+}

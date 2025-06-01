@@ -6,7 +6,10 @@ import { loadernewCommentEl } from './renderCommentsFunction.js'
 import { replaceAllFunction } from './replaceAllFunction.js'
 import { renderComments } from './renderCommentsFunction.js'
 import { getData } from './index.js'
+import { postComments, token } from './api.js'
 import { getDataFirst } from './index.js'
+export const authToken = 'https://wedev-api.sky.pro/api/user/login'
+export const regToken = 'https://wedev-api.sky.pro/api/user'
 buttonEl.addEventListener('click', () => {
     const newComment = {
         author: {
@@ -20,14 +23,7 @@ buttonEl.addEventListener('click', () => {
     const sendData = () => {
         createFormEl.classList.add('hidden')
         loadernewCommentEl.classList.remove('hidden')
-        fetch('https://wedev-api.sky.pro/api/v1/V-Korolyov/comments', {
-            method: 'POST',
-            body: JSON.stringify({
-                text: newComment.text,
-                name: newComment.author.name,
-                forceError: true,
-            }),
-        })
+        postComments(newComment)
             .then((response) => {
                 if (response.status === 201) {
                     return response.json()
@@ -40,8 +36,13 @@ buttonEl.addEventListener('click', () => {
                             'Имя и комментарий должны быть не короче 3-х символов',
                         )
                     }
-                    throw new Error('Что-то пошло не так')
+                    if (response.status === 401) {
+                        throw new Error('Необходима авторизация!')
+                    }
                 }
+            })
+            .catch((Error) => {
+                alert(Error)
             })
             .then((data) => {
                 getData()
@@ -56,6 +57,7 @@ buttonEl.addEventListener('click', () => {
                 loadernewCommentEl.classList.add('hidden')
             })
     }
+
     sendData()
 
     renderComments()
